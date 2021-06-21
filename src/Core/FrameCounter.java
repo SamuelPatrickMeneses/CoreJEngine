@@ -1,7 +1,10 @@
 
 package Core;
 
-
+/**
+ *
+ * @author Sameul P M
+ */
 public final class FrameCounter {
     private long fps;//fps em calculo
     private long lfps;//fps em exibição

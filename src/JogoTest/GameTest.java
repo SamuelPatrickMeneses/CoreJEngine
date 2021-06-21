@@ -2,12 +2,17 @@
 package JogoTest;
 
 import Core.Game;
+import Core.KeyHearer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Point2D;
+import java.awt.event.KeyEvent;
+/**
+ *
+ * @author Sameul P M
+ */
 
 
 public class GameTest extends Game {
@@ -15,13 +20,15 @@ public class GameTest extends Game {
     public volatile int y;
     public volatile Point.Float v = new Point.Float();
     public volatile Point.Float p = new Point.Float();
+    public KeyHearer k ;
     
     public GameTest(int w, int h) {
         super(new Dimension(w,h));
         p.x = 5;
         p.y = 300;
         v.x = 1.8f;
-       
+        v.y = 1.8f;
+       k = KeyHearer.getResource();
     }
 
     @Override
@@ -36,11 +43,15 @@ public class GameTest extends Game {
 
     @Override
     public void onUpdate() {
-        p.x += v.x;
-        if(p.x > 800 || p.x < 0){
-            v.x *= -1;
+         if(k.isPressed(KeyEvent.VK_DOWN))
+             p.y += v.y;
+         if(k.isPressed(KeyEvent.VK_UP))
+             p.y -= v.y;
+         if(k.isPressed(KeyEvent.VK_RIGHT))
+             p.x += v.x;
+         if(k.isPressed(KeyEvent.VK_LEFT))
+             p.x -= v.x;
         }   
-    }
 
     @Override
     public void onRender(Graphics2D g) {

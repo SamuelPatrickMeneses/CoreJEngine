@@ -7,7 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-
+/**
+ *
+ * @author Sameul P M
+ */
 public abstract class Game extends JPanel  {
   private volatile static boolean run;
   private volatile static boolean pausa;
@@ -19,6 +22,9 @@ public abstract class Game extends JPanel  {
         setSize(d);
         backbuffer = new BufferedImage((int) d.getWidth(), (int) d.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Game.run = false;
+        setFocusable(true);
+        requestFocus();
+        addKeyListener(KeyHearer.getResource());
         render = new Looping(60,Looping.TYPE_FPS);
         updater = new Looping(100,Looping.TYPE_TPS);
     }

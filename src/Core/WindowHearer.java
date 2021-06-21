@@ -4,7 +4,10 @@ package Core;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-
+/**
+ *
+ * @author Sameul P M
+ */
 public class WindowHearer implements WindowListener {
 
     @Override

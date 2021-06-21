@@ -5,7 +5,6 @@
  */
 package JogoTest;
 
-import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 /**
