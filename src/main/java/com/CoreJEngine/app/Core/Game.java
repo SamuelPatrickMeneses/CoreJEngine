@@ -1,5 +1,5 @@
 
-package Core;
+package com.CoreJEngine.app.Core;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,13 +14,19 @@ public abstract class Game extends JPanel  {
   private Looping render;
   private Looping updater;
   private BufferedImage backbuffer;
+  private KeyHearer keyboard;
   
-    public Game(Dimension d) {
+    public Game(Dimension d, int fps, int tps) {
         setSize(d);
         backbuffer = new BufferedImage((int) d.getWidth(), (int) d.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Game.run = false;
-        render = new Looping(60,Looping.TYPE_FPS);
-        updater = new Looping(100,Looping.TYPE_TPS);
+        render = new Looping(fps,Looping.TYPE_FPS);
+        updater = new Looping(tps,Looping.TYPE_TPS);
+        keyboard =  KeyHearer.getInstance();
+        this.addKeyListener(keyboard);
+    }
+    public Game(Dimension d) {
+      this(d, 60, 95);
     }
 
     private void load() {
@@ -58,8 +64,15 @@ public abstract class Game extends JPanel  {
   }
   public  void start(){
       run = true;
+	    load();
       updater.start();
       render.start();
+  }
+  public long getFps(){
+        return render.getFps();
+  }
+  public long getTps(){
+        return updater.getFps();
   }
   public abstract void onLoad();
   public abstract void onUnload();
@@ -68,28 +81,23 @@ public abstract class Game extends JPanel  {
   
     public class Looping extends Thread{
         private FrameCounter c;
-        public static final int TYPE_FPS = 0;
-        public static final int TYPE_TPS = 1;
+        public static final byte TYPE_FPS = 0;
+        public static final byte TYPE_TPS = 1;
         private Runnable r;
-        public Looping(int v, int type){
+        public Looping(int v, byte type){
             this.c = new FrameCounter(v);
             switch(type){
                 case 0:
                     this.setName("render");
-                    r = ()->{
-                        render();
-                    };
+                    r = () -> render();
                     break;
                 case 1:
                     this.setName("updater");
-                    r = ()->{
-                        update();   
-                    };
+                    r = () -> update();
             }
         }
         @Override
         public void run(){
-            load();
             c.startCount();
             while(Game.run){
                 if(Game.pausa) 
@@ -97,9 +105,13 @@ public abstract class Game extends JPanel  {
                 r.run();
                 c.update();
             }
+          if(this.getName().equals("updater"))
             unload();
-      }
         }
+       public long getFps(){
+           return c.getFps();
+       }
     }
+}
    
 

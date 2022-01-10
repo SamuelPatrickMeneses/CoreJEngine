@@ -1,5 +1,5 @@
 
-package Core;
+package com.CoreJEngine.app.Core;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

@@ -1,7 +1,7 @@
-Core/Game$Looping.class
-JogoTest/Main.class
-JogoTest/GameTest.class
-Core/FrameCounter.class
-Core/Game.class
-com/CoreJEngine/app/App.class
-Core/WindowHearer.class
+com/CoreJEngine/app/Core/Game.class
+com/CoreJEngine/app/JogoTest/GameTest.class
+com/CoreJEngine/app/Core/Game$Looping.class
+com/CoreJEngine/app/JogoTest/Main.class
+com/CoreJEngine/app/Core/FrameCounter.class
+com/CoreJEngine/app/Core/KeyHearer.class
+com/CoreJEngine/app/Core/WindowHearer.class

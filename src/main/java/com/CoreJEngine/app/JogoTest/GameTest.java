@@ -1,7 +1,7 @@
 
-package JogoTest;
+package com.CoreJEngine.app.JogoTest;
 
-import Core.Game;
+import com.CoreJEngine.app.Core.Game;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -46,7 +46,7 @@ public class GameTest extends Game {
     public void onRender(Graphics2D g) {
         g.setColor(new Color(0,0,0));
         g.setFont(new Font("Calibre",Font.PLAIN,34));
-        //g.drawString("FPS "+this.getFc().getFps(), 100, 100);
+        g.drawString(String.format("FPS %d/%d", this.getFps(), this.getTps()), 100, 100);
         g.fillRect((int)p.x, (int)p.y, 20, 20);
         
         

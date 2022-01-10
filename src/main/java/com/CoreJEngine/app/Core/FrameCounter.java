@@ -1,5 +1,5 @@
 
-package Core;
+package com.CoreJEngine.app.Core;
 
 
 public final class FrameCounter {
@@ -16,9 +16,7 @@ public final class FrameCounter {
     }
     
     public void startCount(){
-        this.ti = System.nanoTime();
-        this.realTime = ti;
-        this.nt = this.ti + this.tf;
+        this.realTime = System.nanoTime();
     }
     
     public void update(){
@@ -31,8 +29,9 @@ public final class FrameCounter {
             this.realTime = System.nanoTime();
         }
         try{
-            if((nt - System.nanoTime())>=0){
-                long t =(long)(this.nt - System.nanoTime())/1000000;
+			long t  = nt - System.nanoTime();
+            if(t >= 0){
+                t =  t / 1000000;
                 Thread.sleep(t);
             }
         }catch(IllegalArgumentException | InterruptedException e){
@@ -44,7 +43,7 @@ public final class FrameCounter {
     }
     public void setFps(long fps){
         this.limitFrame = fps;
-        this.tf =(long) (1000000000/fps);
+        this.tf = (long) 1000000000/fps;
     }
     public  long getlimitFrame(){
         return this.limitFrame;
