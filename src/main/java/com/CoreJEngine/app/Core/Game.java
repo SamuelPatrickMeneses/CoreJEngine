@@ -15,7 +15,7 @@ public abstract class Game extends JPanel  {
   private Looping updater;
   private BufferedImage backbuffer;
   private KeyHearer keyboard;
-  
+  private MouseHearer mouse;
     public Game(Dimension d, int fps, int tps) {
         setSize(d);
         backbuffer = new BufferedImage((int) d.getWidth(), (int) d.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -24,9 +24,12 @@ public abstract class Game extends JPanel  {
         updater = new Looping(tps,Looping.TYPE_TPS);
         keyboard =  KeyHearer.getInstance();
         this.addKeyListener(keyboard);
+        mouse = MouseHearer.getInstance();
+        this.addMouseListener(mouse);
+        this.addMouseMotionListener(mouse);
     }
     public Game(Dimension d) {
-      this(d, 60, 95);
+      this(d, 66, 95);
     }
 
     private void load() {
@@ -49,6 +52,8 @@ public abstract class Game extends JPanel  {
     }
 
     public void update() {
+        mouse.update();
+        keyboard.update();
         this.onUpdate();
     }
 
@@ -100,8 +105,10 @@ public abstract class Game extends JPanel  {
         public void run(){
             c.startCount();
             while(Game.run){
-                if(Game.pausa) 
+                if(Game.pausa){
+                    Thread.yield(); 
                     continue;
+                }
                 r.run();
                 c.update();
             }
